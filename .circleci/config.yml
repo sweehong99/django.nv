@@ -31,6 +31,14 @@ jobs:
           destination: safety-artifact
           when: always
 
+oast-frontend:
+  stage: test
+  image: node:alpine3.10
+  script:
+    - npm install             # Install the dependencies before scans
+    - npm install -g retire   # Install retirejs tool
+    - retire --outputformat json --outputpath retirejs-report.json --severity high
+
   integration:
     docker:
       - image: python:3.6
